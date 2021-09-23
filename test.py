@@ -1,7 +1,6 @@
 # coding:utf-8
-# modified from: https://github.com/haqishen/MFNet-pytorch
-# By Yuxiang Sun, Aug. 2, 2019
-# Email: sun.yuxiang@outlook.com
+# modified from: https://github.com/yuxiangsun/RTFNet
+
 
 import os
 import argparse
