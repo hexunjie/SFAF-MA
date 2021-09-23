@@ -1,5 +1,4 @@
-# By Yuxiang Sun, Dec. 4, 2020
-# Email: sun.yuxiang@outlook.com
+
 
 import numpy as np 
 from PIL import Image 
