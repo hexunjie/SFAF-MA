@@ -1,6 +1,5 @@
 # coding:utf-8
-# By Yuxiang Sun, Aug. 2, 2019
-# Email: sun.yuxiang@outlook.com
+
 
 import os, shutil, stat
 import argparse 
