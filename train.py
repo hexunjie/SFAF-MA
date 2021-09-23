@@ -1,5 +1,4 @@
-# By Yuxiang Sun, Dec. 4, 2019
-# Email: sun.yuxiang@outlook.com
+
 
 import os, argparse, time, datetime, stat, shutil
 import numpy as np
