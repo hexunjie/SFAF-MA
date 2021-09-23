@@ -43,28 +43,7 @@ def train(epo, model, train_loader, optimizer):
               % (args.model_name, epo, args.epoch_max, it + 1, len(train_loader), lr_this_epo,
                  len(names) / (time.time() - start_t), float(loss),
                  datetime.datetime.now().replace(microsecond=0) - start_datetime))
-        if accIter['train'] % 1 == 0:
-            writer.add_scalar('Train/loss', loss, accIter['train'])
-        view_figure = True  # note that I have not colorized the GT and predictions here
-        if accIter['train'] % 500 == 0:
-            if view_figure:
-                input_rgb_images = vutils.make_grid(images[:, :3], nrow=8,
-                                                    padding=10)  # can only display 3-channel images, so images[:,:3]
-                writer.add_image('Train/input_rgb_images', input_rgb_images, accIter['train'])
-                scale = max(1,
-                            255 // args.n_class)  # label (0,1,2..) is invisable, multiply a constant for visualization
-                groundtruth_tensor = labels.unsqueeze(1) * scale  # mini_batch*480*640 -> mini_batch*1*480*640
-                groundtruth_tensor = torch.cat((groundtruth_tensor, groundtruth_tensor, groundtruth_tensor),
-                                               1)  # change to 3-channel for visualization
-                groudtruth_images = vutils.make_grid(groundtruth_tensor, nrow=8, padding=10)
-                writer.add_image('Train/groudtruth_images', groudtruth_images, accIter['train'])
-                predicted_tensor = logits.argmax(1).unsqueeze(
-                    1) * scale  # mini_batch*args.n_class*480*640 -> mini_batch*480*640 -> mini_batch*1*480*640
-                predicted_tensor = torch.cat((predicted_tensor, predicted_tensor, predicted_tensor),
-                                             1)  # change to 3-channel for visualization, mini_batch*1*480*640
-                predicted_images = vutils.make_grid(predicted_tensor, nrow=8, padding=10)
-                writer.add_image('Train/predicted_images', predicted_images, accIter['train'])
-        accIter['train'] = accIter['train'] + 1
+        
 
 
 def validation(epo, model, val_loader):
@@ -82,29 +61,7 @@ def validation(epo, model, val_loader):
                   args.model_name, epo, args.epoch_max, it + 1, len(val_loader), len(names) / (time.time() - start_t),
                   float(loss),
                   datetime.datetime.now().replace(microsecond=0) - start_datetime))
-            if accIter['val'] % 1 == 0:
-                writer.add_scalar('Validation/loss', loss, accIter['val'])
-            view_figure = False  # note that I have not colorized the GT and predictions here
-            if accIter['val'] % 100 == 0:
-                if view_figure:
-                    input_rgb_images = vutils.make_grid(images[:, :3], nrow=8,
-                                                        padding=10)  # can only display 3-channel images, so images[:,:3]
-                    writer.add_image('Validation/input_rgb_images', input_rgb_images, accIter['val'])
-                    scale = max(1,
-                                255 // args.n_class)  # label (0,1,2..) is invisable, multiply a constant for visualization
-                    groundtruth_tensor = labels.unsqueeze(1) * scale  # mini_batch*480*640 -> mini_batch*1*480*640
-                    groundtruth_tensor = torch.cat((groundtruth_tensor, groundtruth_tensor, groundtruth_tensor),
-                                                   1)  # change to 3-channel for visualization
-                    groudtruth_images = vutils.make_grid(groundtruth_tensor, nrow=8, padding=10)
-                    writer.add_image('Validation/groudtruth_images', groudtruth_images, accIter['val'])
-                    predicted_tensor = logits.argmax(1).unsqueeze(
-                        1) * scale  # mini_batch*args.n_class*480*640 -> mini_batch*480*640 -> mini_batch*1*480*640
-                    predicted_tensor = torch.cat((predicted_tensor, predicted_tensor, predicted_tensor),
-                                                 1)  # change to 3-channel for visualization, mini_batch*1*480*640
-                    predicted_images = vutils.make_grid(predicted_tensor, nrow=8, padding=10)
-                    writer.add_image('Validation/predicted_images', predicted_images, accIter['val'])
-            accIter['val'] += 1
-
+            
 
 def testing(epo, model, test_loader):
     model.eval()
@@ -125,14 +82,7 @@ def testing(epo, model, test_loader):
             print('Test: %s, epo %s/%s, iter %s/%s, time %s' % (
             args.model_name, epo, args.epoch_max, it + 1, len(test_loader),
             datetime.datetime.now().replace(microsecond=0) - start_datetime))
-    precision, recall, IoU = compute_results(conf_total)
-    writer.add_scalar('Test/average_precision', precision.mean(), epo)
-    writer.add_scalar('Test/average_recall', recall.mean(), epo)
-    writer.add_scalar('Test/average_IoU', IoU.mean(), epo)
-    for i in range(len(precision)):
-        writer.add_scalar("Test(class)/precision_class_%s" % label_list[i], precision[i], epo)
-        writer.add_scalar("Test(class)/recall_class_%s" % label_list[i], recall[i], epo)
-        writer.add_scalar('Test(class)/Iou_%s' % label_list[i], IoU[i], epo)
+    
     if epo == 0:
         with open(testing_results_file, 'w') as f:
             f.write("# %s, initial lr: %s, batch size: %s, date: %s \n" % (
