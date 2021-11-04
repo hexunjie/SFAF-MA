@@ -1,2 +1,2 @@
 # SFAF-MA
-RGB-T semantic segmentation network
+Spatial Feature Aggregation Fusion with Modality Adaptation for RGB-Thermal Semantic Segmentation
