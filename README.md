@@ -11,8 +11,9 @@ Build the environment with `python3.6.5` and `torch1.9.0`.
 The dataset is the public MFNet dataset and it can be got from [here]().
 
 ## Implement Demo
-The `.pth` file can be downlodad from final.pth()
+The `.pth` file can be downlodad from [final.pth]()
 
     python run_demo.py
 
-After which the result can be re-implemented.
+After which the result can be re-implemented as follows.
+![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/3.png)
