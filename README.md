@@ -12,16 +12,19 @@ The dataset is the public MFNet dataset and it can be got from [here]().
 
 ## Implement Demo
 The `.pth` file can be downlodad from [final.pth]()
+
 The path of dataset and the weight(final.pth) should be changed to your path.
 
     cd SFAF-MA
     python run_demo.py
 
 After which the result can be re-implemented as follows.
+
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/3.png)
 
 ## Train
 In the training process, you may need to adjust the parameters to adapt to your device, such as the batch size, the learning rate and the other.
+
 To train it,
 
     cd SFAF-MA
