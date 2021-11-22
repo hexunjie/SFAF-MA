@@ -32,8 +32,7 @@ def train(epo, model, train_loader, optimizer):
         start_t = time.time()  # time.time() returns the current time
         optimizer.zero_grad()
         logits = model(images)
-        loss = F.cross_entropy(logits,
-                               labels)  # Note that the cross_entropy function has already include the softmax function
+        loss = F.cross_entropy(logits, labels)  # Note that the cross_entropy function has already include the softmax function
         loss.backward()
         optimizer.step()
         lr_this_epo = 0
@@ -54,8 +53,7 @@ def validation(epo, model, val_loader):
             labels = Variable(labels).cuda(args.gpu)
             start_t = time.time()  # time.time() returns the current time
             logits = model(images)
-            loss = F.cross_entropy(logits,
-                                   labels)  # Note that the cross_entropy function has already include the softmax function
+            loss = F.cross_entropy(logits, labels)  # Note that the cross_entropy function has already include the softmax function
             print('Val: %s, epo %s/%s, iter %s/%s, %.2f img/sec, loss %.4f, time %s' \
                   % (
                   args.model_name, epo, args.epoch_max, it + 1, len(val_loader), len(names) / (time.time() - start_t),
