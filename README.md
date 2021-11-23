@@ -23,7 +23,7 @@ After which the result can be re-implemented as follows.
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/3.png)
 
 ## Train
-In the training process, you may need to adjust the parameters to adapt to your device, such as the batch size, the learning rate and the other.
+In the training process, you may need to adjust the parameters to adapt to your device, such as the batch size and the learning rate.
 
 To train it,
 
