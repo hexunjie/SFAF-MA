@@ -1,7 +1,7 @@
 # SFAF-MA:Spatial Feature Aggregation Fusion with Modality Adaptation for RGB-Thermal Semantic Segmentation
 This is the overall architecture of our work, which contains two encoder branches and one decoder branch. Besides, three subsections which are Modality Difference Adaptive Fusion (MDAF), Lateral Semantic Fusion (LSF) and the Decoder Block are shown.
 
-The video which introduces the paper can be downloaded [here]().
+The video which introduces the paper can be downloaded [here](https://drive.google.com/file/d/14D05Jt6IRwvf5JpcFKdSzWLjpyxYzbpn/view?usp=sharing).
 
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/02.jpg)
 
