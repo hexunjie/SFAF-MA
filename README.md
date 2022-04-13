@@ -3,7 +3,7 @@ This is the overall architecture of our work, which contains two encoder branche
 
 The video which introduces the paper can be downloaded [here](https://drive.google.com/file/d/14D05Jt6IRwvf5JpcFKdSzWLjpyxYzbpn/view?usp=sharing).
 
-![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/02.jpg)
+![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/02.png)
 
 ## Preparation
 Build the environment with `python3.6.5` and `torch1.9.0`.
