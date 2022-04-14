@@ -6,10 +6,10 @@ This is the overall architecture of our work, which contains two encoder branche
 ## Preparation
 Build the environment with `python3.6.5` and `torch1.8.0`.
 
-The dataset is the public MFNet dataset and it can be got from [here](https://drive.google.com/file/d/17H6Oj_q-EqAT1ebj3bi7QS4OhQWxuEJh/view?usp=sharing).
+The dataset is the public MFNet dataset and it can be got from [here](https://store4.gofile.io/download/direct/744d63d7-d4af-44ff-9b45-27d54f3eb697/dataset.zip).
 
 ## Implement Demo
-The `.pth` file can be downlodad from [final.pth](https://gofile.io/d/xhwc19)
+The `.pth` file can be downlodad from [final.pth](https://store4.gofile.io/download/direct/161d7392-0e9f-4093-8afd-eb98380394cb/199.pth)
 
 The path of dataset and the weight(final.pth) should be changed to your path.
 
