@@ -1,7 +1,7 @@
 # SFAF-MA:Spatial Feature Aggregation Fusion with Modality Adaptation for RGB-Thermal Semantic Segmentation
 This is the overall architecture of our work, which contains two encoder branches and one decoder branch. Besides, three subsections which are Modality Difference Adaptive Fusion (MDAF), Spatial Semantic Fusion (SSF) and the Decoder Block are shown.
 
-![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/02.jpg)
+![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/01.png)
 
 ## Preparation
 Build the environment with `python3.6.5` and `torch1.8.0`.
