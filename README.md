@@ -19,6 +19,7 @@ The path of dataset and the weight should be changed to your path.
 After which the result can be re-implemented as follows.
 
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/03.png)
+
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/04.png)
 
 Our method clearly achieves the best performance with 69.5% mAcc and 55.3% mIoU values in MFNet dataset and 65.7% mAcc and 60.0% mIoU values in PST900 dataset, which are both the best results in each dataset. 
