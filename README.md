@@ -9,7 +9,6 @@ Build the environment with `python3.6.5` and `torch1.8.0`.
 The dataset is the public [MFNet](https://www.mi.t.u-tokyo.ac.jp/static/projects/mil_multispectral/) dataset and [PST900](https://drive.google.com/open?id=1hZeM-MvdUC_Btyok7mdF00RV-InbAadm) dataset.
 
 ## Implement Demo
-The best `.pth` file can be downlodad from [final.pth]()
 
 The path of dataset and the weight should be changed to your path.
 
