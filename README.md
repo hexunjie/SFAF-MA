@@ -16,6 +16,18 @@ The path of dataset and the weight should be changed to your path.
     cd SFAF-MA
     python run_demo.py
 
+
+The best `.pth` file can be downlodad below.
+Dataset | Network | Weights
+------------- | ------------- | -------------
+ MFNet  | SFAF-MA-18 | final.pth
+ MFNet  | SFAF-MA-50 | final.pth
+ MFNet  | SFAF-MA-101 | final.pth
+ MFNet  | SFAF-MA-152 | final.pth
+ PST900  | PSTNet | final.pth
+ PST900  | RTFNet-50 | final.pth
+ PST900  | SFAF-MA-50 | final.pth
+ 
 After which the result can be re-implemented as follows.
 
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/03.png)
