@@ -19,8 +19,8 @@ The path of dataset and the weight should be changed to your path.
 The best `.pth` file can be downlodad below.
 Dataset | Network | Weights
 ------------- | ------------- | -------------
- MFNet  | SFAF-MA-18 | [final.pth]()
- MFNet  | SFAF-MA-50 | [final.pth]()
+ MFNet  | SFAF-MA-18 | [final.pth](https://drive.google.com/drive/folders/1Qo2qaN8hQpclTb_ZC6UJdudeTce_eUXM)
+ MFNet  | SFAF-MA-50 | [final.pth](https://drive.google.com/drive/folders/15BnNBZTEX9nPcZNtCq0IzMjE1IFDvayg)
  MFNet  | SFAF-MA-101 | [final.pth]()
  MFNet  | SFAF-MA-152 | [final.pth]()
  PST900  | PSTNet | [final.pth]()
