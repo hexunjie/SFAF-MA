@@ -21,7 +21,7 @@ Dataset | Network | Weights
 ------------- | ------------- | -------------
  MFNet  | SFAF-MA-18 | [final.pth](https://drive.google.com/drive/folders/1Qo2qaN8hQpclTb_ZC6UJdudeTce_eUXM)
  MFNet  | SFAF-MA-50 | [final.pth](https://drive.google.com/drive/folders/15BnNBZTEX9nPcZNtCq0IzMjE1IFDvayg)
- MFNet  | SFAF-MA-101 | [final.pth]()
+ MFNet  | SFAF-MA-101 | [final.pth](https://drive.google.com/drive/folders/1y3xqa9hFsz8d6yiARmbhFDBTfv6p644B)
  MFNet  | SFAF-MA-152 | [final.pth]()
  PST900  | PSTNet | [final.pth]()
  PST900  | RTFNet-50 | [final.pth]()
