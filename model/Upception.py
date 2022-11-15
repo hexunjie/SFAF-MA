@@ -1,7 +1,3 @@
-# coding:utf-8
-# By XunJie He
-# Email: hxj990319@163.com
-
 import torch
 import torch.nn as nn
 import numpy as np
