@@ -270,29 +270,84 @@ class SFAFMA(nn.Module):
         ######################################################################
          # (480, 640)
         ######################################################################
+        rgb = self.encoder_rgb_conv1(rgb)
+        rgb = self.encoder_rgb_bn1(rgb)
+        rgb = self.encoder_rgb_relu(rgb)
+        # (240, 320)
         thermal = self.encoder_thermal_conv1(thermal)
         thermal = self.encoder_thermal_bn1(thermal)
         thermal = self.encoder_thermal_relu(thermal)
+        # (240, 320)
 
+        e0 = rgb + thermal
+        e00 = self.local_att0(e0)
+        e01 = self.global_att0(e0)
+        w0 = self.sigmoid(self.conv0(e00+e01)+e0)
+        e02 = rgb * w0 + thermal * (1 - w0)
+
+
+        rgb = self.encoder_rgb_maxpool(e0)
         thermal = self.encoder_thermal_maxpool(thermal)
-
+        rgb = self.encoder_rgb_layer1(rgb)
         thermal = self.encoder_thermal_layer1(thermal)
 
+        e1 = rgb + thermal
+        e10 = self.local_att1(e1)
+        e11 = self.global_att1(e1)
+        w1 = self.sigmoid(self.conv1(e10+e11)+e1)
+        e12 = rgb * w1 + thermal * (1 - w1)
 
+
+        rgb = self.encoder_rgb_layer2(e1)
         thermal = self.encoder_thermal_layer2(thermal)
+        e2 = rgb + thermal
+        e20 = self.local_att2(e2)
+        e21 = self.global_att2(e2)
+        w2 = self.sigmoid(self.conv2(e20+e21)+e2)
+        e22 = rgb * w2 + thermal * (1 - w2)
 
 
+
+        rgb = self.encoder_rgb_layer3(e2)
         thermal = self.encoder_thermal_layer3(thermal)
+        e3 = rgb + thermal
+        e30 = self.local_att3(e3)
+        e31 = self.global_att3(e3)
+        w3 = self.sigmoid(self.conv3(e30+e31)+e3)
+        e32 = rgb * w3 + thermal * (1 - w3)
 
+
+        rgb = self.encoder_rgb_layer4(e3)
         thermal = self.encoder_thermal_layer4(thermal)
+        #[2,2208,15,20]
+        e4 = rgb + thermal
+        e40 = self.local_att4(e4)
+        e41 = self.global_att4(e4)
+        w4 = self.sigmoid(self.conv4(e40+e41)+e4)
+        e42 = rgb * w4 + thermal * (1 - w4)
+        e43 = self.aspp4(e42)
 
-        d4 = self.decoder4(thermal)
+        #x_list.append(e4)
+        #e40 = self.encoder_relu(e4)
+        #e41 = self.encoder_gap(e40)
+        #e42 = self.encoder_downsampling4(e33)
+        #e43 = e42 + e41 * rgb + (1 - e41) * thermal
+
+        # img_feats5 = cv2.normalize(e43[1, 1, :, :], None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
+        # img_feats5 = cv2.applyColorMap(img_feats5, cv2.COLORMAP_JET)
+        # cv2.imshow('heatimage5', img_feats5)
+        # cv2.waitKey(2000)
+        ######################################################################
+
+        # decoder
+
+        d4 = self.decoder4(e43)+e32
         #d4 = self.conv3(torch.cat([d4,e3], dim=1))
-        d3 = self.decoder3(d4)
+        d3 = self.decoder3(d4)+e22
         #d3 = self.conv2(torch.cat([d3, e2], dim=1))
-        d2 = self.decoder2(d3)
+        d2 = self.decoder2(d3)+e12
         #d2 = self.conv1(torch.cat([d2, e1], dim=1))
-        d1 = self.decoder1(d2)
+        d1 = self.decoder1(d2)+e02
         #d1 = self.conv0(torch.cat([d1, e0], dim=1))
         """
 
