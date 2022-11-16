@@ -16,16 +16,13 @@ The path of dataset and the weight should be changed to your path.
     python run_demo.py
 
 
-The best `.pth` file can be downlodad below.
-Dataset | Network | Weights
-------------- | ------------- | -------------
- MFNet  | SFAF-MA-18 | [final.pth](https://drive.google.com/drive/folders/1Qo2qaN8hQpclTb_ZC6UJdudeTce_eUXM)
- MFNet  | SFAF-MA-50 | [final.pth](https://drive.google.com/drive/folders/15BnNBZTEX9nPcZNtCq0IzMjE1IFDvayg)
- MFNet  | SFAF-MA-101 | [final.pth](https://drive.google.com/drive/folders/1y3xqa9hFsz8d6yiARmbhFDBTfv6p644B)
- MFNet  | SFAF-MA-152 | [final.pth](https://drive.google.com/drive/folders/1h3hN8T0ae0bVKliCCI0upng__9Ux1B7q)
- PST900  | PSTNet | [final.pth]()
- PST900  | RTFNet-50 | [final.pth]()
- PST900  | SFAF-MA-50 | [final.pth]()
+The best `.pth` file in MFNet can be downlodad below.
+ Network | Weights
+------------- | -------------
+ SFAF-MA-18 | [final.pth](https://drive.google.com/drive/folders/1Qo2qaN8hQpclTb_ZC6UJdudeTce_eUXM)
+ SFAF-MA-50 | [final.pth](https://drive.google.com/drive/folders/15BnNBZTEX9nPcZNtCq0IzMjE1IFDvayg)
+ SFAF-MA-101 | [final.pth](https://drive.google.com/drive/folders/1y3xqa9hFsz8d6yiARmbhFDBTfv6p644B)
+ SFAF-MA-152 | [final.pth](https://drive.google.com/drive/folders/1h3hN8T0ae0bVKliCCI0upng__9Ux1B7q)
  
 After which the result can be re-implemented as follows.
 
