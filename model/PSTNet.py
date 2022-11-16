@@ -6,6 +6,8 @@ import sys
 import torchvision.models as models
 #sys.path.append('../data/')
 
+"""https://github.com/ShreyasSkandanS/PST900_thermal_rgb"""
+
 def convrelu(in_channels, out_channels, kernel, padding):
     return nn.Sequential(
         nn.Conv2d(in_channels, out_channels, kernel, padding=padding),
