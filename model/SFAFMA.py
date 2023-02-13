@@ -107,27 +107,40 @@ class ASPP(nn.Module):
             nn.ReLU(inplace=True),
         )
         self.context3 = nn.Sequential(
-            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=3, dilation=3),
+            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=2, dilation=2),
             nn.BatchNorm2d(int(in_channel // 4)),
             nn.ReLU(inplace=True),
-            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=5, dilation=5),
+            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=4, dilation=4),
             nn.BatchNorm2d(int(in_channel // 4)),
             nn.ReLU(inplace=True),
-            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=7, dilation=7),
+            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=8, dilation=8),
+            nn.BatchNorm2d(int(in_channel // 4)),
+            nn.ReLU(inplace=True),
+        )
+        self.context4 = nn.Sequential(
+            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=2, dilation=2),
+            nn.BatchNorm2d(int(in_channel // 4)),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=4, dilation=4),
+            nn.BatchNorm2d(int(in_channel // 4)),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(int(in_channel // 4), int(in_channel // 4), 3, 1, padding=8, dilation=8),
             nn.BatchNorm2d(int(in_channel // 4)),
             nn.ReLU(inplace=True),
         )
         self.conv2 = nn.Conv2d(int(in_channel // 4), depth, kernel_size=1, stride=1, padding=0)
         self.dropout = nn.Dropout(p=0.5)
+
     def forward(self, x):
         img = self.conv1(x)
-        #print(img.shape)
-        img = self.context1(img)+self.context2(img)+self.context3(img)
-        #print(img.shape)
+        # print(img.shape)
+        img = self.context1(img) + self.context2(img) + self.context3(img) + self.context4(img)
+        # print(img.shape)
         part1 = self.conv2(img)
-        out = self.dropout(x+part1)
-        #print(out.shape)
+        out = self.dropout(x + part1)
+        # print(out.shape)
         return out
+
 
 
 
