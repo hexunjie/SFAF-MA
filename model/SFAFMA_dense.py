@@ -306,7 +306,7 @@ class SFAFMA(nn.Module):
 
         e00 = self.local_att0(e0)
         e01 = self.global_att0(e0)
-        w0 = self.sigmoid(self.conv0(e00 + e01))
+        w0 = self.sigmoid(self.conv0(e00 + e01)+e0)
         e02 = rgb * w0 + thermal * (1 - w0)
 
 
@@ -339,7 +339,7 @@ class SFAFMA(nn.Module):
 
         e10 = self.local_att1(e1)
         e11 = self.global_att1(e1)
-        w1 = self.sigmoid(self.conv1(e10 + e11))
+        w1 = self.sigmoid(self.conv1(e10 + e11)+e1)
         e12 = rgb * w1 + thermal * (1 - w1)
 
 
@@ -368,7 +368,7 @@ class SFAFMA(nn.Module):
         #e2 = self.aspp2(e2)
         e20 = self.local_att2(e2)
         e21 = self.global_att2(e2)
-        w2 = self.sigmoid(self.conv2(e20 + e21))
+        w2 = self.sigmoid(self.conv2(e20 + e21)+e2)
         e22 = rgb * w2 + thermal * (1 - w2)
 
 
@@ -396,7 +396,7 @@ class SFAFMA(nn.Module):
 
         e30 = self.local_att3(e3)
         e31 = self.global_att3(e3)
-        w3 = self.sigmoid(self.conv3(e30 + e31))
+        w3 = self.sigmoid(self.conv3(e30 + e31)+e3)
         e32 = rgb * w3 + thermal * (1 - w3)
 
 
@@ -422,7 +422,7 @@ class SFAFMA(nn.Module):
 
         e40 = self.local_att4(e4)
         e41 = self.global_att4(e4)
-        w4 = self.sigmoid(self.conv4(e40 + e41))
+        w4 = self.sigmoid(self.conv4(e40 + e41)+e4)
         e42 = rgb * w4 + thermal * (1 - w4)
         e43=self.aspp4(e42)
         #x_list.append(e4)
