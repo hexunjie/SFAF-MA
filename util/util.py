@@ -49,4 +49,6 @@ def compute_results(conf_total):
         else:
             iou_per_class[cid] = float(conf_total[cid, cid]) / float((conf_total[cid, start_index:].sum() + conf_total[start_index:, cid].sum() - conf_total[cid, cid])) # IoU = TP/(TP+FP+FN)
 
-    return precision_per_class, recall_per_class, iou_per_class
+        f1score=2*precision_per_class*recall_per_class/(precision_per_class+recall_per_class)
+
+    return precision_per_class, recall_per_class, iou_per_class, f1score
