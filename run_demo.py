@@ -2,7 +2,7 @@ import os, argparse, time, datetime, sys, shutil, stat, torch
 import numpy as np 
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from util.MF_dataset import MF_dataset 
+from util.MF_dataset import MF_dataset, val_dataset
 from util.util import compute_results, visualize
 from sklearn.metrics import confusion_matrix
 from scipy.io import savemat 
@@ -12,9 +12,9 @@ from model import SFAFMA
 parser = argparse.ArgumentParser(description='Test with pytorch')
 #############################################################################################
 parser.add_argument('--model_name', '-m', type=str, default='SFAFMA')
-parser.add_argument('--weight_name', '-w', type=str, default='best')
-parser.add_argument('--file_name', '-f', type=str, default='120.pth')
-parser.add_argument('--dataset_split', '-d', type=str, default='test_day') # test, test_day, test_night
+parser.add_argument('--weight_name', '-w', type=str, default='pstnet_mf')
+parser.add_argument('--file_name', '-f', type=str, default='180.pth')
+parser.add_argument('--dataset_split', '-d', type=str, default='test') # test, test_day, test_night
 parser.add_argument('--gpu', '-g', type=int, default=0)
 #############################################################################################
 parser.add_argument('--img_height', '-ih', type=int, default=480) 
@@ -22,7 +22,7 @@ parser.add_argument('--img_width', '-iw', type=int, default=640)
 parser.add_argument('--num_workers', '-j', type=int, default=16)
 parser.add_argument('--n_class', '-nc', type=int, default=9)
 parser.add_argument('--data_dir', '-dr', type=str, default='/home/hxj/RTFNet/dataset/')
-parser.add_argument('--model_dir', '-wd', type=str, default='/home/hxj/SFAF-MA/runs_50')
+parser.add_argument('--model_dir', '-wd', type=str, default='/home/hxj/SFAF-MA/weights_existed/')
 args = parser.parse_args()
 #############################################################################################
  
@@ -72,17 +72,23 @@ if __name__ == '__main__':
         drop_last   = False
     )
     ave_time_cost = 0.0
+    starter, ender = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
+
+
 
     model.eval()
     with torch.no_grad():
         for it, (images, labels, names) in enumerate(test_loader):
+            times = 0.0
             images = Variable(images).cuda(args.gpu)
             labels = Variable(labels).cuda(args.gpu)
-            start_time = time.time()
+            starter.record()
             logits = model(images)  # logits.size(): mini_batch*num_class*480*640
-            end_time = time.time()
+            ender.record()
+            torch.cuda.synchronize()
+            curr_time = starter.elapsed_time(ender)
             if it>=5: # # ignore the first 5 frames
-                ave_time_cost += (end_time-start_time)
+                ave_time_cost += curr_time
             # convert tensor to numpy 1d array
             label = labels.cpu().numpy().squeeze().flatten()
             prediction = logits.argmax(1).cpu().numpy().squeeze().flatten() # prediction and label are both 1-d array, size: minibatch*640*480
@@ -92,9 +98,9 @@ if __name__ == '__main__':
             # save demo images
             visualize(image_name=names, predictions=logits.argmax(1), weight_name=args.weight_name)
             print("%s, %s, frame %d/%d, %s, time cost: %.2f ms, demo result saved."
-                  %(args.model_name, args.weight_name, it+1, len(test_loader), names, (end_time-start_time)*1000))
- 
-    precision_per_class, recall_per_class, iou_per_class = compute_results(conf_total)
+                  %(args.model_name, args.weight_name, it+1, len(test_loader), names, curr_time))
+
+    precision_per_class, recall_per_class, iou_per_class, f1score = compute_results(conf_total)
     conf_total_matfile = os.path.join("./runs", 'conf_'+args.weight_name+'.mat')
     savemat(conf_total_matfile,  {'conf': conf_total}) # 'conf' is the variable name when loaded in Matlab
  
@@ -108,12 +114,15 @@ if __name__ == '__main__':
     print("* recall per class: \n    unlabeled: %.6f, car: %.6f, person: %.6f, bike: %.6f, curve: %.6f, car_stop: %.6f, guardrail: %.6f, color_cone: %.6f, bump: %.6f" \
           %(recall_per_class[0], recall_per_class[1], recall_per_class[2], recall_per_class[3], recall_per_class[4], recall_per_class[5], recall_per_class[6], recall_per_class[7], recall_per_class[8]))
     print("* iou per class: \n    unlabeled: %.6f, car: %.6f, person: %.6f, bike: %.6f, curve: %.6f, car_stop: %.6f, guardrail: %.6f, color_cone: %.6f, bump: %.6f" \
-          %(iou_per_class[0], iou_per_class[1], iou_per_class[2], iou_per_class[3], iou_per_class[4], iou_per_class[5], iou_per_class[6], iou_per_class[7], iou_per_class[8])) 
-    print("\n* average values (np.mean(x)): \n recall: %.6f, iou: %.6f" \
-          %(recall_per_class.mean(), iou_per_class.mean()))
-    print("* average values (np.mean(np.nan_to_num(x))): \n recall: %.6f, iou: %.6f" \
-          %(np.mean(np.nan_to_num(recall_per_class)), np.mean(np.nan_to_num(iou_per_class))))
-    print('\n* the average time cost per frame (with batch size %d): %.2f ms, namely, the inference speed is %.2f fps' %(batch_size, ave_time_cost*1000/(len(test_loader)-5), 1.0/(ave_time_cost/(len(test_loader)-5)))) # ignore the first 10 frames
+          %(iou_per_class[0], iou_per_class[1], iou_per_class[2], iou_per_class[3], iou_per_class[4], iou_per_class[5], iou_per_class[6], iou_per_class[7], iou_per_class[8]))
+    print("* f1score: \n    unlabeled: %.6f, car: %.6f, person: %.6f, bike: %.6f, curve: %.6f, car_stop: %.6f, guardrail: %.6f, color_cone: %.6f, bump: %.6f" \
+        % (f1score[0], f1score[1], f1score[2], f1score[3], f1score[4], f1score[5],
+           f1score[6], f1score[7], f1score[8]))
+    print("\n* average values (np.mean(x)): \n recall: %.6f, iou: %.6f, precision: %.6f, f1score: %.6f " \
+          %(recall_per_class.mean(), iou_per_class.mean(), precision_per_class.mean(), f1score.mean()))
+    print("* average values (np.mean(np.nan_to_num(x))): \n recall: %.6f, iou: %.6f, precision: %.6f, f1score: %.6f " \
+          %(np.mean(np.nan_to_num(recall_per_class)), np.mean(np.nan_to_num(iou_per_class)),precision_per_class.mean(), f1score.mean()))
+    print('\n* the average time cost per frame (with batch size %d): %.2f ms, namely, the inference speed is %.2f fps' %(batch_size, ave_time_cost/(len(test_loader)-5), 1000/(ave_time_cost/(len(test_loader)-5)))) # ignore the first 10 frames
     #print('\n* the total confusion matrix: ') 
     #np.set_printoptions(precision=8, threshold=np.inf, linewidth=np.inf, suppress=True)
     #print(conf_total)
