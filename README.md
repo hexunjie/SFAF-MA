@@ -29,7 +29,7 @@ After which the result can be re-implemented as follows.
 
 ![](https://github.com/hexunjie/SFAF-MA/blob/main/pictures/03.png)
 
-Our method clearly achieves the best performance with 69.5% mAcc and 55.3% mIoU values in MFNet dataset and 65.7% mAcc and 60.0% mIoU values in PST900 dataset, which are both the best results in each dataset. 
+Our method clearly achieves the best performance with 69.6% mAcc, 55.5% mIoU, 68.0% mPre and 67.0% F1-score values in MFNet dataset, and 68.3% mAcc, 54.5% mIoU, 75.7% mPre and 65.8% F1-score values in PST900 dataset, which are both the best results in each dataset. 
 
 ## Train
 In the training process, you may need to adjust the parameters to adapt to your device, such as the batch size and the learning rate.
